@@ -10,7 +10,7 @@
 
 ### Frontend
 - [x] Introduction
-- [ ] Typescript
+- [x] Typescript
 - [ ] Working with components
 - [ ] Data and eventbinding
 - [ ] Forms
