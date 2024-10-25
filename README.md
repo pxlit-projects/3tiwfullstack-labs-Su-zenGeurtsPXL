@@ -9,7 +9,7 @@
 - [ ]  Dockerize your application
 
 ### Frontend
-- [ ] Introduction
+- [x] Introduction
 - [ ] Typescript
 - [ ] Working with components
 - [ ] Data and eventbinding
