@@ -1,4 +1,6 @@
 # Full Stack: Java 2024-2025
+All you need to know in my [wiki](https://github.com/pxlit-projects/3tiwfullstack-labs-Su-zenGeurtsPXL/wiki)
+
 ### Backend
 - [ ]  Introductie technologieën & Spring Cloud architectuur
 - [ ]  Setup your first micro services
