@@ -11,7 +11,7 @@
 ### Frontend
 - [x] Introduction
 - [x] Typescript
-- [ ] Working with components
+- [x] Working with components
 - [ ] Data and eventbinding
 - [ ] Forms
 - [ ] Services and dependency injection
