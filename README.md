@@ -9,14 +9,14 @@
 - [ ]  Dockerize your application
 
 ### Frontend
-- [x] Introduction
-- [x] Typescript
-- [x] Working with components
-- [ ] Data and eventbinding
-- [ ] Forms
-- [ ] Services and dependency injection
-- [ ] HTTP requests
-- [ ] Routing
-- [ ] Environments and deployments
-- [ ] Unit testing
-- [ ] Angular Material
+- [x] Chapter 01: Introduction
+- [x] Chapter 02: Typescript
+- [x] Chapter 03: Working with components
+- [ ] Chapter 04: Data and eventbinding
+- [ ] Chapter 05: Forms
+- [ ] Chapter 06: Services and dependency injection
+- [ ] Chapter 07: HTTP requests
+- [ ] Chapter 08: Routing
+- [ ] Chapter 09: Environments and deployments
+- [ ] Chapter 10: Unit testing
+- [ ] Chapter 11: Angular Material
