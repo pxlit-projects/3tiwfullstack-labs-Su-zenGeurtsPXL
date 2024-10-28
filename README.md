@@ -15,7 +15,7 @@ All you need to know in my [wiki](https://github.com/pxlit-projects/3tiwfullstac
 - [x] Chapter 02: Typescript
 - [x] Chapter 03: Working with components
 - [x] Chapter 04: Databinding, events & directives
-- [ ] Chapter 05: Forms
+- [x] Chapter 05: Forms
 - [ ] Chapter 06: Services and dependency injection
 - [ ] Chapter 07: HTTP requests
 - [ ] Chapter 08: Routing
