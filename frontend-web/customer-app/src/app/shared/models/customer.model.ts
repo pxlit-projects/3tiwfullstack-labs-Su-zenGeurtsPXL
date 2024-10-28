@@ -9,7 +9,7 @@ export class Customer {
   avatar: string;
   id?: number;
 
-  constructor(name: string, email: string, city: string, address: string, country: string, vat: number, avatar: string = 'avatar.png'){
+  constructor(name: string, email: string, city: string, address: string, country: string, vat: number, avatar: string = 'default.png'){
     this.name = name;
     this.email = email;
     this.city = city;

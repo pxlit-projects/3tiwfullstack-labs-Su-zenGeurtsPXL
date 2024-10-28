@@ -19,4 +19,3 @@ export class CustomerItemComponent {
     console.log(this.customer);
   }
 }
-
