@@ -1,6 +1,6 @@
 <app-filter (filterChanged)="handleFilter($event)"></app-filter>
 
-<div class="md:container md:mx-auto container mx-auto mt-10">
+<div class="md:container md:mx-auto container mx-auto my-10">
   <div class="grid grid-cols-3 gap-6">
     @for(item of filteredData$ | async; track item.name){
       <app-customer-item [customer]="item"></app-customer-item>
