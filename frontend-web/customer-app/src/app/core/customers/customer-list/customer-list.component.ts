@@ -3,11 +3,12 @@ import {CustomerItemComponent} from "../customer-item/customer-item.component";
 import {FilterComponent} from "../filter/filter.component";
 import {Customer} from "../../../shared/models/customer.model";
 import {Filter} from "../../../shared/models/filter.model";
+import {AddCustomerComponent} from "../add-customer/add-customer.component";
 
 @Component({
   selector: 'app-customer-list',
   standalone: true,
-  imports: [CustomerItemComponent, FilterComponent],
+  imports: [CustomerItemComponent, FilterComponent, AddCustomerComponent],
   templateUrl: './customer-list.component.html',
   styleUrl: './customer-list.component.css'
 })
@@ -36,6 +37,11 @@ export class CustomerListComponent implements OnInit {
     const matchesVat = filter.vat ? customer.vat === filter.vat : true;
 
     return matchesName && matchesCity && matchesVat;
+  }
+
+  processAdd(customer: Customer){
+    this.customers.push(customer);
+    this.filteredData = this.customers;
   }
 }
 
