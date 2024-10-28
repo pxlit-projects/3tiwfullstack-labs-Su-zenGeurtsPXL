@@ -17,7 +17,7 @@ All you need to know in my [wiki](https://github.com/pxlit-projects/3tiwfullstac
 - [x] Chapter 04: Databinding, events & directives
 - [x] Chapter 05: Forms
 - [x] Chapter 06: Services and dependency injection
-- [ ] Chapter 07: HTTP requests
+- [x] Chapter 07: HTTP
 - [ ] Chapter 08: Routing
 - [ ] Chapter 09: Environments and deployments
 - [ ] Chapter 10: Unit testing
