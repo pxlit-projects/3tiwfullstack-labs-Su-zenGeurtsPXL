@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
-import {Customer} from "../../models/customer.model";
-import {Filter} from "../../models/filter.model";
+import {Customer} from "../models/customer.model";
+import {Filter} from "../models/filter.model";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 
@@ -25,6 +25,15 @@ export class CustomerService {
       map((customers: Customer[]) => customers.filter(customer => this.isCustomerMatchingFilter(customer, filter)))
     );
   }
+
+  updateCustomer(customer: Customer): Observable<Customer>{
+    return this.http.put<Customer>('/api/customers/' + customer.id, customer);
+  }
+
+  getCustomer(id: number): Observable<Customer> {
+    return this.http.get<Customer>('api/customers/' + id);
+  }
+
 
   private isCustomerMatchingFilter(customer: Customer, filter: Filter): boolean {
     const matchesName = customer.name.toLowerCase().includes(filter.name.toLowerCase());

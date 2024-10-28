@@ -1,12 +1,12 @@
 import {Component, inject, OnInit} from '@angular/core';
+import {AsyncPipe} from "@angular/common";
+import {Observable} from "rxjs";
 import {CustomerItemComponent} from "../customer-item/customer-item.component";
+import {AddCustomerComponent} from "../add-customer/add-customer.component";
 import {FilterComponent} from "../filter/filter.component";
 import {Customer} from "../../../shared/models/customer.model";
 import {Filter} from "../../../shared/models/filter.model";
-import {AddCustomerComponent} from "../add-customer/add-customer.component";
-import {CustomerService} from "../../../shared/services/customer/customer.service";
-import {AsyncPipe} from "@angular/common";
-import {Observable} from "rxjs";
+import {CustomerService} from "../../../shared/services/customer.service";
 
 @Component({
   selector: 'app-customer-list',
@@ -25,14 +25,6 @@ export class CustomerListComponent implements OnInit {
 
   handleFilter(filter: Filter){
     this.filteredData$ = this.customerService.filterCustomers(filter);
-  }
-
-  processAdd(customer: Customer){
-    this.customerService.addCustomer(customer).subscribe({
-      next: () => {
-        this.fetchData();
-      }
-    });
   }
 
   fetchData(): void {
