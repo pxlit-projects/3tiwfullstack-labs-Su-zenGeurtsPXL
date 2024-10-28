@@ -19,6 +19,6 @@ All you need to know in my [wiki](https://github.com/pxlit-projects/3tiwfullstac
 - [x] Chapter 06: Services & DI
 - [x] Chapter 07: HTTP
 - [x] Chapter 08: Routing
-- [ ] Chapter 09: Environments & deployments
+- [x] Chapter 09: Environments & deployments
 - [ ] Chapter 10: Unit testing
 - [ ] Chapter 11: Angular Material
