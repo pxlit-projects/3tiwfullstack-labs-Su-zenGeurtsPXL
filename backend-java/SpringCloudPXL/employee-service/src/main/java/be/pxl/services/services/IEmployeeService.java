@@ -12,7 +12,7 @@ public interface IEmployeeService {
 
     List<EmployeeResponse> getAllEmployees();
 
-    EmployeeResponse getEmployeeByDepartment(Long departmentId);
+    List<EmployeeResponse> getEmployeesByDepartment(Long departmentId);
 
-    EmployeeResponse getEmployeeByOrganization(Long organizationId);
+    List<EmployeeResponse> getEmployeesByOrganization(Long organizationId);
 }

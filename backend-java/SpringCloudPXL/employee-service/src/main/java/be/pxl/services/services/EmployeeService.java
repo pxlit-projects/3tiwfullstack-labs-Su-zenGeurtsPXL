@@ -42,17 +42,21 @@ public class EmployeeService implements IEmployeeService{
     }
 
     @Override
-    public EmployeeResponse getEmployeeByDepartment(Long departmentId) {
-        return employeeRepository.findByDepartmentId(departmentId)
+    public List<EmployeeResponse> getEmployeesByDepartment(Long departmentId) {
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee -> employee.getDepartmentId().equals(departmentId))
                 .map(this::mapToEmployeeResponse)
-                .orElse(null);
+                .toList();
     }
 
     @Override
-    public EmployeeResponse getEmployeeByOrganization(Long organizationId) {
-        return employeeRepository.findByOrganizationId(organizationId)
+    public List<EmployeeResponse> getEmployeesByOrganization(Long organizationId) {
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee -> employee.getOrganizationId().equals(organizationId))
                 .map(this::mapToEmployeeResponse)
-                .orElse(null);
+                .toList();
     }
 
     private EmployeeResponse mapToEmployeeResponse(Employee employee) {

@@ -36,13 +36,13 @@ public class EmployeeController {
 
     @GetMapping(path = "/department/{departmentId}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeResponse findByDepartment(@PathVariable Long departmentId) {
-        return employeeService.getEmployeeByDepartment(departmentId);
+    public List<EmployeeResponse> findByDepartment(@PathVariable Long departmentId) {
+        return employeeService.getEmployeesByDepartment(departmentId);
     }
 
     @GetMapping(path = "/organization/{organizationId}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeResponse findByOrganization(@PathVariable Long organizationId) {
-        return employeeService.getEmployeeByOrganization(organizationId);
+    public List<EmployeeResponse> findByOrganization(@PathVariable Long organizationId) {
+        return employeeService.getEmployeesByOrganization(organizationId);
     }
 }
