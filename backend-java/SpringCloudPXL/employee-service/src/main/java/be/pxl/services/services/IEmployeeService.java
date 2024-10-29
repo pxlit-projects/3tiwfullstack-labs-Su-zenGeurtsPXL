@@ -6,7 +6,13 @@ import be.pxl.services.domain.dto.EmployeeResponse;
 import java.util.List;
 
 public interface IEmployeeService {
+    void addEmployee(EmployeeRequest employeeRequest);
+
+    EmployeeResponse getEmployeeById(Long id);
+
     List<EmployeeResponse> getAllEmployees();
 
-    void addEmployee(EmployeeRequest employeeRequest);
+    EmployeeResponse getEmployeeByDepartment(Long departmentId);
+
+    EmployeeResponse getEmployeeByOrganization(Long organizationId);
 }
