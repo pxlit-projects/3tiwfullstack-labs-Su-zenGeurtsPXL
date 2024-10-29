@@ -2,13 +2,15 @@
 All you need to know in my [wiki](https://github.com/pxlit-projects/3tiwfullstack-labs-Su-zenGeurtsPXL/wiki)
 
 ### Backend
-- [ ]  Introductie technologieën & Spring Cloud architectuur
-- [ ]  Setup your first micro services
-- [ ]  Testen met Testcontainers.org
-- [ ]  Discovery Service en Open Feign
-- [ ]  Gecentraliseerde config & API Gateway
-- [ ]  Messaging AMQP
-- [ ]  Dockerize your application
+- [ ]  Chapter 1: Spring Cloud
+- [ ]  Chapter 2: Unit testing
+- [ ]  Chapter 3: Discovery
+- [ ]  Chapter 4: Open Feign
+- [ ]  Chapter 5: Config Service
+- [ ]  Chapter 6: Gateway Service
+- [ ]  Chapter 7: Logging
+- [ ]  Chapter 8: Messaging AMQP
+- [ ]  Chapter 9: Swagger API
 
 ### Frontend
 - [x] Chapter 01: Introduction
