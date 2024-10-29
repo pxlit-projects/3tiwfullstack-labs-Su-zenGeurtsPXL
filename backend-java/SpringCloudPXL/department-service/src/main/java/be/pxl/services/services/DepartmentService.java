@@ -54,21 +54,17 @@ public class DepartmentService implements IDepartmentService {
         return departmentRepository.findAll()
                 .stream()
                 .filter(department -> department.getOrganizationId().equals(organizationId))
-                .map(this::mapToDepartmentResponseWithEmployees)
+                .map(department -> {
+                    DepartmentResponse dr = mapToDepartmentResponse(department);
+                    dr.setEmployees(department.getEmployees());
+                    return dr;
+                })
                 .toList();
     }
 
     private DepartmentResponse mapToDepartmentResponse(Department department) {
         return DepartmentResponse.builder()
                 .name(department.getName())
-                .position(department.getPosition())
-                .build();
-    }
-
-    private DepartmentResponse mapToDepartmentResponseWithEmployees(Department department) {
-        return DepartmentResponse.builder()
-                .name(department.getName())
-                .employees(department.getEmployees())
                 .position(department.getPosition())
                 .build();
     }
