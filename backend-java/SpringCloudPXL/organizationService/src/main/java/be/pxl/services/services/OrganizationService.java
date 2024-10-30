@@ -1,6 +1,10 @@
 package be.pxl.services.services;
 
+import be.pxl.services.domain.Department;
+import be.pxl.services.domain.Employee;
 import be.pxl.services.domain.Organization;
+import be.pxl.services.domain.dto.DepartmentResponse;
+import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.domain.dto.OrganizationResponse;
 import be.pxl.services.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +27,9 @@ public class OrganizationService implements IOrganizationService {
     public OrganizationResponse getOrganizationByIdWithDepartments(Long id) {
         return organizationRepository.findById(id)
                 .map(organization -> {
-                    OrganizationResponse or = mapToOrganizationResponse(organization);
-                    or.setDepartments(organization.getDepartments());
-                    return or;
+                    OrganizationResponse organizationResponse = mapToOrganizationResponse(organization);
+                    organizationResponse.setDepartments(organization.getDepartments().stream().map(this::mapToDepartmentResponse).toList());
+                    return organizationResponse;
                 })
                 .orElse(null);
     }
@@ -34,10 +38,10 @@ public class OrganizationService implements IOrganizationService {
     public OrganizationResponse getOrganizationByIdWithDepartmentsAndEmployees(Long id) {
         return organizationRepository.findById(id)
                 .map(organization -> {
-                    OrganizationResponse or = mapToOrganizationResponse(organization);
-                    or.setDepartments(organization.getDepartments());
-                    or.setEmployees(organization.getEmployees());
-                    return or;
+                    OrganizationResponse organizationResponse = mapToOrganizationResponse(organization);
+                    organizationResponse.setDepartments(organization.getDepartments().stream().map(this::mapToDepartmentResponse).toList());
+                    organizationResponse.setEmployees(organization.getEmployees().stream().map(this::mapToEmployeeResponse).toList());
+                    return organizationResponse;
                 })
                 .orElse(null);
     }
@@ -46,9 +50,9 @@ public class OrganizationService implements IOrganizationService {
     public OrganizationResponse getOrganizationByIdWithEmployees(Long id) {
         return organizationRepository.findById(id)
                 .map(organization -> {
-                    OrganizationResponse or = mapToOrganizationResponse(organization);
-                    or.setEmployees(organization.getEmployees());
-                    return or;
+                    OrganizationResponse organizationResponse = mapToOrganizationResponse(organization);
+                    organizationResponse.setEmployees(organization.getEmployees().stream().map(this::mapToEmployeeResponse).toList());
+                    return organizationResponse;
                 })
                 .orElse(null);
     }
@@ -57,6 +61,20 @@ public class OrganizationService implements IOrganizationService {
         return OrganizationResponse.builder()
                 .name(organization.getName())
                 .address(organization.getAddress())
+                .build();
+    }
+
+    private DepartmentResponse mapToDepartmentResponse(Department department) {
+        return DepartmentResponse.builder()
+                .id(department.getId())
+                .name(department.getName())
+                .build();
+    }
+
+    private EmployeeResponse mapToEmployeeResponse(Employee employee) {
+        return EmployeeResponse.builder()
+                .id(employee.getId())
+                .name(employee.getName())
                 .build();
     }
 }

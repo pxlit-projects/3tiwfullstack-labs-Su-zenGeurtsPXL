@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganizationRequest {
-
+public class EmployeeResponse {
+    private Long id;
     private String name;
-    private String address;
 }

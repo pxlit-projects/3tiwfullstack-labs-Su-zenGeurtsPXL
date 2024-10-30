@@ -21,9 +21,9 @@ public class Organization {
     private String name;
     private String address;
 
-    @Transient
+    @OneToMany(mappedBy = "organization")
     private List<Employee> employees = new ArrayList<>();
 
-    @Transient
+    @OneToMany(mappedBy = "organization")
     private List<Department> departments = new ArrayList<>();
 }
