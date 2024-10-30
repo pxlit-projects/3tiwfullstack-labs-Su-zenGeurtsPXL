@@ -5,17 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DepartmentResponse {
-
+public class EmployeeResponse {
     private Long id;
-    private Long organizationId;
     private String name;
-    private List<EmployeeResponse> employees;
-    private String position;
 }

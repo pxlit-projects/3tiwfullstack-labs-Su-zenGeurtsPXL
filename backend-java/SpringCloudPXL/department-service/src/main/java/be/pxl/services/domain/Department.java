@@ -22,7 +22,7 @@ public class Department {
     private Long organizationId;
     private String name;
 
-    @Transient
+    @OneToMany(mappedBy = "department")
     private List<Employee> employees = new ArrayList<>();
     private String position;
 

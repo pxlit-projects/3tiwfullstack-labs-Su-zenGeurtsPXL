@@ -18,9 +18,11 @@ public class EmployeeService implements IEmployeeService{
     @Override
     public void addEmployee(EmployeeRequest employeeRequest) {
         Employee employee = Employee.builder()
-                .age(employeeRequest.getAge())
+                .organizationId(employeeRequest.getOrganizationId())
+                .departmentId(employeeRequest.getDepartmentId())
                 .name(employeeRequest.getName())
                 .position(employeeRequest.getPosition())
+                .age(employeeRequest.getAge())
                 .build();
 
         employeeRepository.save(employee);
@@ -61,9 +63,12 @@ public class EmployeeService implements IEmployeeService{
 
     private EmployeeResponse mapToEmployeeResponse(Employee employee) {
         return EmployeeResponse.builder()
-                .age(employee.getAge())
+                .id(employee.getId())
+                .organizationId(employee.getOrganizationId())
+                .departmentId(employee.getDepartmentId())
                 .name(employee.getName())
                 .position(employee.getPosition())
+                .age(employee.getAge())
                 .build();
     }
 }
