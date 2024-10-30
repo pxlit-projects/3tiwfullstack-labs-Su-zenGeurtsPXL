@@ -2,7 +2,7 @@
 All you need to know in my [wiki](https://github.com/pxlit-projects/3tiwfullstack-labs-Su-zenGeurtsPXL/wiki)
 
 ### Backend
-- [ ]  Chapter 1: Spring Cloud
+- [x]  Chapter 1: Spring Cloud
 - [ ]  Chapter 2: Unit testing
 - [ ]  Chapter 3: Discovery
 - [ ]  Chapter 4: Open Feign
