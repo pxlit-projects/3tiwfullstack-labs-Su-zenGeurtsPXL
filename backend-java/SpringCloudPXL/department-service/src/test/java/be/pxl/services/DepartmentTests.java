@@ -91,7 +91,7 @@ public class DepartmentTests {
         int id = expectedDepartment.getId().intValue();
 
         String expectedId = "\"id\":" + id;
-        String expectedOrganizationId = "\"organizationId\":" + expectedDepartment.getOrganizationId() + "\"";
+        String expectedOrganizationId = "\"organizationId\":" + expectedDepartment.getOrganizationId();
         String expectedName = "\"name\":\"" + expectedDepartment.getName() + "\"";
         String expectedPosition = "\"position\":\"" + expectedDepartment.getPosition() + "\"";
 

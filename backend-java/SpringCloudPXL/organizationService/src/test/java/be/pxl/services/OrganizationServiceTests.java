@@ -1,11 +1,7 @@
 package be.pxl.services;
 
 import be.pxl.services.domain.Organization;
-import be.pxl.services.domain.Department;
-import be.pxl.services.domain.Employee;
 import be.pxl.services.repository.OrganizationRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.OneToMany;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +17,6 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
@@ -35,9 +30,6 @@ public class OrganizationServiceTests {
 
     @Autowired
     MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     private OrganizationRepository organizationRepository;
