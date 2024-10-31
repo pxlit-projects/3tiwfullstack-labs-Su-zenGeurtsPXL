@@ -12,8 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -53,10 +53,11 @@ public class EmployeeTests {
         employeeRepository.deleteAll();
 
         for (int i = 0; i < 10; i++) {
-            int id = (i % 4) + 1;
+            int departmentId = (i % 4) + 1;
+            int organizationId = (i % 3) + 1;
             Employee employee = Employee.builder()
-                    .departmentId((long) id)
-                    .organizationId((long) id)
+                    .departmentId((long) departmentId)
+                    .organizationId((long) organizationId)
                     .age(24)
                     .name("Jan")
                     .position("student")
@@ -68,6 +69,8 @@ public class EmployeeTests {
     @Test
     public void testAdd() throws Exception {
         Employee employee = Employee.builder()
+                .departmentId(5L)
+                .organizationId(4L)
                 .age(24)
                 .name("Jan")
                 .position("student")
@@ -80,56 +83,64 @@ public class EmployeeTests {
                         .content(employeeRequest))
                 .andExpect(status().isCreated());
 
-        int expectedSize = employeeRepository.findAll().size();
-        assertEquals(expectedSize, employeeRepository.findAll().size());
+        assertEquals(11, employeeRepository.findAll().size());
     }
 
     @Test
     public void testFindById() throws Exception {
         List<Employee> employees = employeeRepository.findAll();
-        int id = employees.get(0).getId().intValue();
+        Employee expectedEmployee = employees.get(0);
+        int id = expectedEmployee.getId().intValue();
 
-        MvcResult mockResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/" + id))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/" + id))
                 .andExpect(status().isOk())
-                .andReturn();
-
-        assertEquals(objectMapper.writeValueAsString(employees.get(0)), mockResult.getResponse().getContentAsString());
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value(expectedEmployee));
     }
 
     @Test
     public void testFindAll() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/employee"))
-                .andExpect(status().isOk())
-                .andReturn();
+        List<Employee> expectedEmployees = employeeRepository.findAll();
 
-        assertEquals(objectMapper.writeValueAsString(employeeRepository.findAll()), mvcResult.getResponse().getContentAsString());
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/employee"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(expectedEmployees.size()))
+                .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(expectedEmployees)));
+
     }
 
     @Test
     public void testFindByDepartment() throws Exception {
         List<Employee> employees = employeeRepository.findAll();
-        int departmentId = employees.get(0).getDepartmentId().intValue();
+        Long departmentId = employees.get(0).getDepartmentId();
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/department/" + departmentId))
+        List<Employee> expectedEmployees = employees
+                .stream()
+                .filter(employee -> employee.getDepartmentId().equals(departmentId))
+                .toList();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/department/" + departmentId))
                 .andExpect(status().isOk())
-                .andReturn();
-
-        List<Employee> expectedEmployees = employeeRepository.findAll()
-                .stream().filter(employee -> employee.getDepartmentId().equals((long) departmentId)).toList();
-        assertEquals(objectMapper.writeValueAsString(expectedEmployees), mvcResult.getResponse().getContentAsString());
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(expectedEmployees.size()))
+                .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(expectedEmployees)));
     }
 
     @Test
     public void testFindByOrganization() throws Exception {
         List<Employee> employees = employeeRepository.findAll();
-        int organizationId = employees.get(1).getOrganizationId().intValue();
+        Long organizationId = employees.get(0).getOrganizationId();
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/organization/" + organizationId))
+        List<Employee> expectedEmployees = employees
+                .stream()
+                .filter(employee -> employee.getOrganizationId().equals(organizationId))
+                .toList();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/organization/" + organizationId))
                 .andExpect(status().isOk())
-                .andReturn();
-
-        List<Employee> expectedEmployees = employeeRepository.findAll()
-                .stream().filter(employee -> employee.getDepartmentId().equals((long) organizationId)).toList();
-        assertEquals(objectMapper.writeValueAsString(expectedEmployees), mvcResult.getResponse().getContentAsString());
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(expectedEmployees.size()))
+                .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(expectedEmployees)));
     }
 }

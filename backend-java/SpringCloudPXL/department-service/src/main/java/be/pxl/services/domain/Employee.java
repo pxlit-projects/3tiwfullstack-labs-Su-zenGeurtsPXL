@@ -1,5 +1,6 @@
 package be.pxl.services.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class Employee {
     private String name;
 
     @ManyToOne
+    @JsonIgnore
     private Department department;
 
 }
