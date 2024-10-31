@@ -3,7 +3,7 @@ All you need to know in my [wiki](https://github.com/pxlit-projects/3tiwfullstac
 
 ### Backend
 - [x]  Chapter 1: Spring Cloud
-- [ ]  Chapter 2: Unit testing
+- [x]  Chapter 2: Unit testing
 - [ ]  Chapter 3: Discovery
 - [ ]  Chapter 4: Open Feign
 - [ ]  Chapter 5: Config Service
