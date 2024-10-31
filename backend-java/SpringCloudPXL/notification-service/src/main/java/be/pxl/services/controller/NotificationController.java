@@ -1,30 +1,23 @@
 package be.pxl.services.controller;
 
-import be.pxl.services.domain.dto.NotificationRequest;
-import be.pxl.services.domain.dto.NotificationResponse;
-import be.pxl.services.services.INotificationService;
+import be.pxl.services.domain.Notification;
+import be.pxl.services.services.NotificationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
+@Slf4j
 @RequestMapping("/api/notification")
 @RequiredArgsConstructor
 public class NotificationController {
 
-    private final INotificationService notificationService;
+    private final NotificationService notificationService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody NotificationRequest notificationRequest) {
-        notificationService.addNotification(notificationRequest);
-    }
-
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<NotificationResponse> findAll() {
-        return notificationService.getAllNotifications();
+    public void sendmessage(@RequestBody Notification notification) {
+        notificationService.sendMessage(notification);
     }
 }
