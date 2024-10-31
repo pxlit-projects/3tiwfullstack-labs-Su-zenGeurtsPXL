@@ -1,5 +1,6 @@
 package be.pxl.services.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -22,8 +23,10 @@ public class Organization {
     private String address;
 
     @OneToMany(mappedBy = "organization")
+    @JsonIgnore
     private List<Employee> employees = new ArrayList<>();
 
     @OneToMany(mappedBy = "organization")
+    @JsonIgnore
     private List<Department> departments = new ArrayList<>();
 }

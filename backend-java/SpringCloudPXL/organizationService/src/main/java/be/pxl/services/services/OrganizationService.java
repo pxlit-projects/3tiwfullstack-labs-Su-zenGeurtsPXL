@@ -59,6 +59,7 @@ public class OrganizationService implements IOrganizationService {
 
     private OrganizationResponse mapToOrganizationResponse(Organization organization) {
         return OrganizationResponse.builder()
+                .id(organization.getId())
                 .name(organization.getName())
                 .address(organization.getAddress())
                 .build();

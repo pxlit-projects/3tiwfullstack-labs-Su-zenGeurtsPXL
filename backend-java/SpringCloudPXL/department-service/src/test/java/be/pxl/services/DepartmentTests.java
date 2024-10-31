@@ -56,7 +56,7 @@ public class DepartmentTests {
             int organizationId = (i % 4) + 1;
             Department department = Department.builder()
                     .organizationId((long) organizationId)
-                    .name("MarketingTEST")
+                    .name("Marketing")
                     .employees(null)
                     .position("Content Specialist")
                     .build();
@@ -91,9 +91,9 @@ public class DepartmentTests {
         int id = expectedDepartment.getId().intValue();
 
         String expectedId = "\"id\":" + id;
-        String expectedOrganizationId = "\"organizationId\":" + expectedDepartment.getOrganizationId();
-        String expectedName = "\"name\":\"" + expectedDepartment.getName();
-        String expectedPosition = "\"position\":\"" + expectedDepartment.getPosition();
+        String expectedOrganizationId = "\"organizationId\":" + expectedDepartment.getOrganizationId() + "\"";
+        String expectedName = "\"name\":\"" + expectedDepartment.getName() + "\"";
+        String expectedPosition = "\"position\":\"" + expectedDepartment.getPosition() + "\"";
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/department/" + id))
                 .andExpect(status().isOk())
