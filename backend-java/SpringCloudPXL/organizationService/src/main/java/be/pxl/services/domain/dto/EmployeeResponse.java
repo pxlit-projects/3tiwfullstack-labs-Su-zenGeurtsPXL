@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class EmployeeResponse {
 
     private Long id;
-    private Long organizationId;
     private Long departmentId;
     private String name;
     private int age;

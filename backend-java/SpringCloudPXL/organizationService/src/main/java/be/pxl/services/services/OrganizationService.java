@@ -74,7 +74,6 @@ public class OrganizationService implements IOrganizationService {
     private DepartmentResponse mapToDepartmentResponse(Department department) {
         return DepartmentResponse.builder()
                 .id(department.getId())
-                .organizationId(department.getOrganizationId())
                 .name(department.getName())
                 .position(department.getPosition())
                 .build();
@@ -83,7 +82,6 @@ public class OrganizationService implements IOrganizationService {
     private DepartmentResponse mapToDepartmentResponseWithEmployees(Department department) {
         return DepartmentResponse.builder()
                 .id(department.getId())
-                .organizationId(department.getOrganizationId())
                 .employees(department.getEmployees().stream().map(this::mapToEmployeeResponse).toList())
                 .name(department.getName())
                 .position(department.getPosition())
@@ -93,7 +91,6 @@ public class OrganizationService implements IOrganizationService {
     private EmployeeResponse mapToEmployeeResponse(Employee employee) {
         return EmployeeResponse.builder()
                 .id(employee.getId())
-                .organizationId(employee.getOrganizationId())
                 .departmentId(employee.getDepartmentId())
                 .name(employee.getName())
                 .age(employee.getAge())

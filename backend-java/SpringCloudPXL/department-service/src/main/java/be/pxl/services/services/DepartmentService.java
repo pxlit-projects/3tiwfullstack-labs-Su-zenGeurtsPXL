@@ -79,7 +79,6 @@ public class DepartmentService implements IDepartmentService {
         return EmployeeResponse.builder()
                 .id(employee.getId())
                 .organizationId(employee.getOrganizationId())
-                .departmentId(employee.getDepartmentId())
                 .name(employee.getName())
                 .age(employee.getAge())
                 .position(employee.getPosition())

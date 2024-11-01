@@ -14,7 +14,6 @@ import java.util.List;
 public class DepartmentResponse {
 
     private Long id;
-    private Long organizationId;
     private String name;
     private List<EmployeeResponse> employees;
     private String position;
