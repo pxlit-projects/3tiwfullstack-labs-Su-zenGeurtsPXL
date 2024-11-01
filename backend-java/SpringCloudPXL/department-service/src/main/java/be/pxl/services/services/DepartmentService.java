@@ -78,10 +78,11 @@ public class DepartmentService implements IDepartmentService {
     private EmployeeResponse mapToEmployeeResponse(Employee employee) {
         return EmployeeResponse.builder()
                 .id(employee.getId())
+                .organizationId(employee.getOrganizationId())
+                .departmentId(employee.getDepartmentId())
                 .name(employee.getName())
                 .age(employee.getAge())
                 .position(employee.getPosition())
-                .departmentId(employee.getDepartmentId())
                 .build();
     }
 }
