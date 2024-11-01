@@ -1,21 +1,19 @@
 package be.pxl.services;
 
 import be.pxl.services.domain.Notification;
-import be.pxl.services.repository.NotificationRepository;
+import be.pxl.services.services.NotificationService;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
@@ -34,63 +32,29 @@ public class NotificationServiceTests {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
-    private NotificationRepository notificationRepository;
-
-    @Container
-    private static final MySQLContainer sqlContainer =
-            new MySQLContainer("mysql:5.7.37");
-
-    @DynamicPropertySource
-    static void registerMySQLProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", sqlContainer::getJdbcUrl);
-        registry.add("spring.datasource.username", sqlContainer::getUsername);
-        registry.add("spring.datasource.password", sqlContainer::getPassword);
-    }
-
-    @BeforeEach
-    public void initEach() {
-        notificationRepository.deleteAll();
-
-        for (int i = 0; i < 10; i++) {
-            Notification notification = Notification.builder()
-                    .from("Employee Service")
-                    .to("Department Service")
-                    .subject("Add")
-                    .message("Added new Employee with department id 4")
-                    .build();
-            notificationRepository.save(notification);
-        }
-    }
-
     @Test
-    public void testAdd() throws Exception {
+    public void testSendMessage() throws Exception {
         Notification notification = Notification.builder()
-                .from("Employee Service")
-                .to("Department Service")
-                .subject("Add")
-                .message("Added new Employee with department id 4")
+                .sender("Tom")
+                .message("Employee created")
                 .build();
 
         String notificationRequest = objectMapper.writeValueAsString(notification);
+
+        Logger logger = (Logger) LoggerFactory.getLogger(NotificationService.class); // Replace with your class
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+        logger.addAppender(listAppender);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/notification")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(notificationRequest))
                 .andExpect(status().isCreated());
 
-        assertEquals(11, notificationRepository.findAll().size());
-    }
+        List<ILoggingEvent> logs = listAppender.list;
 
-    @Test
-    public void testFindAll() throws Exception {
-        List<Notification> expectedNotifications = notificationRepository.findAll();
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/notification"))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(expectedNotifications.size()))
-                .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(expectedNotifications)));
-
+        assertEquals("Receiving notification...", logs.get(0).getFormattedMessage());
+        assertEquals("Sending... Employee created", logs.get(1).getFormattedMessage());
+        assertEquals("TO Tom", logs.get(2).getFormattedMessage());
     }
 }
