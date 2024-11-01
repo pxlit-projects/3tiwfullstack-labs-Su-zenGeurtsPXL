@@ -105,8 +105,7 @@ public class DepartmentTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/department"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(expectedDepartments)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(expectedDepartments.size()));
+                .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(expectedDepartments)));
     }
 
     @Test
@@ -118,12 +117,9 @@ public class DepartmentTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/department/organization/" + organizationId))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].employees").doesNotExist())
-                .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(expectedDepartments)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(expectedDepartments.size()));
+                .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(expectedDepartments)));
     }
 
-    // TODO: Add testFindByOrganizationWithEmployees
     @Test
     public void testFindByOrganizationWithEmployees() throws Exception {
         List<Department> departments = departmentRepository.findAll();
@@ -133,8 +129,8 @@ public class DepartmentTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/department/organization/" + organizationId + "/with-employees"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].employees").isArray())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(expectedDepartments.size()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(expectedDepartments.size()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].employees").isArray());
 
         verify(employeeClient, times(expectedDepartments.size())).findByDepartment(anyLong());
     }

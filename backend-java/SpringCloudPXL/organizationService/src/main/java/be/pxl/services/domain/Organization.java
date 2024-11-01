@@ -1,15 +1,13 @@
 package be.pxl.services.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name ="organization")
+@Table(name = "organization")
 @Data
 @Builder
 @NoArgsConstructor
@@ -22,11 +20,9 @@ public class Organization {
     private String name;
     private String address;
 
-    @OneToMany(mappedBy = "organization")
-    @JsonIgnore
-    private List<Employee> employees = new ArrayList<>();
+    @Transient
+    private List<Employee> employees;
 
-    @OneToMany(mappedBy = "organization")
-    @JsonIgnore
-    private List<Department> departments = new ArrayList<>();
+    @Transient
+    private List<Department> departments;
 }

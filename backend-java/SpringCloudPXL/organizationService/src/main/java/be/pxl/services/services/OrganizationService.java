@@ -1,5 +1,7 @@
 package be.pxl.services.services;
 
+import be.pxl.services.client.DepartmentClient;
+import be.pxl.services.client.EmployeeClient;
 import be.pxl.services.domain.Department;
 import be.pxl.services.domain.Employee;
 import be.pxl.services.domain.Organization;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 public class OrganizationService implements IOrganizationService {
 
     private final OrganizationRepository organizationRepository;
+    private final DepartmentClient departmentClient;
+    private final EmployeeClient employeeClient;
 
     @Override
     public OrganizationResponse getOrganizationsById(Long id) {
@@ -28,7 +32,8 @@ public class OrganizationService implements IOrganizationService {
         return organizationRepository.findById(id)
                 .map(organization -> {
                     OrganizationResponse organizationResponse = mapToOrganizationResponse(organization);
-                    organizationResponse.setDepartments(organization.getDepartments().stream().map(this::mapToDepartmentResponse).toList());
+                    organizationResponse.setDepartments(departmentClient.findByOrganization(id)
+                            .stream().map(this::mapToDepartmentResponse).toList());
                     return organizationResponse;
                 })
                 .orElse(null);
@@ -39,8 +44,8 @@ public class OrganizationService implements IOrganizationService {
         return organizationRepository.findById(id)
                 .map(organization -> {
                     OrganizationResponse organizationResponse = mapToOrganizationResponse(organization);
-                    organizationResponse.setDepartments(organization.getDepartments().stream().map(this::mapToDepartmentResponse).toList());
-                    organizationResponse.setEmployees(organization.getEmployees().stream().map(this::mapToEmployeeResponse).toList());
+                    organizationResponse.setDepartments(departmentClient.findByOrganizationWithEmployees(id)
+                            .stream().map(this::mapToDepartmentResponseWithEmployees).toList());
                     return organizationResponse;
                 })
                 .orElse(null);
@@ -51,7 +56,8 @@ public class OrganizationService implements IOrganizationService {
         return organizationRepository.findById(id)
                 .map(organization -> {
                     OrganizationResponse organizationResponse = mapToOrganizationResponse(organization);
-                    organizationResponse.setEmployees(organization.getEmployees().stream().map(this::mapToEmployeeResponse).toList());
+                    organizationResponse.setEmployees(employeeClient.findByOrganization(id)
+                            .stream().map(this::mapToEmployeeResponse).toList());
                     return organizationResponse;
                 })
                 .orElse(null);
@@ -68,14 +74,30 @@ public class OrganizationService implements IOrganizationService {
     private DepartmentResponse mapToDepartmentResponse(Department department) {
         return DepartmentResponse.builder()
                 .id(department.getId())
+                .organizationId(department.getOrganizationId())
                 .name(department.getName())
+                .position(department.getPosition())
+                .build();
+    }
+
+    private DepartmentResponse mapToDepartmentResponseWithEmployees(Department department) {
+        return DepartmentResponse.builder()
+                .id(department.getId())
+                .organizationId(department.getOrganizationId())
+                .employees(department.getEmployees().stream().map(this::mapToEmployeeResponse).toList())
+                .name(department.getName())
+                .position(department.getPosition())
                 .build();
     }
 
     private EmployeeResponse mapToEmployeeResponse(Employee employee) {
         return EmployeeResponse.builder()
                 .id(employee.getId())
+                .organizationId(employee.getOrganizationId())
+                .departmentId(employee.getDepartmentId())
                 .name(employee.getName())
+                .age(employee.getAge())
+                .position(employee.getPosition())
                 .build();
     }
 }
