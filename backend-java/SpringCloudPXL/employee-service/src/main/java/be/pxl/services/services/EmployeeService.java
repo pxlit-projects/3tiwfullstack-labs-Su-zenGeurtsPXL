@@ -54,18 +54,16 @@ public class EmployeeService implements IEmployeeService{
 
     @Override
     public List<EmployeeResponse> getEmployeesByDepartment(Long departmentId) {
-        return employeeRepository.findAll()
+        return employeeRepository.findByDepartmentId(departmentId)
                 .stream()
-                .filter(employee -> employee.getDepartmentId().equals(departmentId))
                 .map(this::mapToEmployeeResponse)
                 .toList();
     }
 
     @Override
     public List<EmployeeResponse> getEmployeesByOrganization(Long organizationId) {
-        return employeeRepository.findAll()
+        return employeeRepository.findByOrganizationId(organizationId)
                 .stream()
-                .filter(employee -> employee.getOrganizationId().equals(organizationId))
                 .map(this::mapToEmployeeResponse)
                 .toList();
     }

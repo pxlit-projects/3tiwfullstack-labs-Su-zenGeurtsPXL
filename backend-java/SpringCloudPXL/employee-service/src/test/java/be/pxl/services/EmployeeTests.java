@@ -1,13 +1,17 @@
 package be.pxl.services;
 
+import be.pxl.services.client.NotificationClient;
 import be.pxl.services.domain.Employee;
+import be.pxl.services.domain.NotificationRequest;
 import be.pxl.services.repository.EmployeeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -33,6 +37,9 @@ public class EmployeeTests {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @MockBean
+    private NotificationClient notificationClient;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -84,6 +91,7 @@ public class EmployeeTests {
                 .andExpect(status().isCreated());
 
         assertEquals(11, employeeRepository.findAll().size());
+        verify(notificationClient, times(1)).sendNotification(any(NotificationRequest.class));
     }
 
     @Test
@@ -114,11 +122,7 @@ public class EmployeeTests {
     public void testFindByDepartment() throws Exception {
         List<Employee> employees = employeeRepository.findAll();
         Long departmentId = employees.get(0).getDepartmentId();
-
-        List<Employee> expectedEmployees = employees
-                .stream()
-                .filter(employee -> employee.getDepartmentId().equals(departmentId))
-                .toList();
+        List<Employee> expectedEmployees = employeeRepository.findByDepartmentId(departmentId);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/department/" + departmentId))
                 .andExpect(status().isOk())
@@ -132,10 +136,7 @@ public class EmployeeTests {
         List<Employee> employees = employeeRepository.findAll();
         Long organizationId = employees.get(0).getOrganizationId();
 
-        List<Employee> expectedEmployees = employees
-                .stream()
-                .filter(employee -> employee.getOrganizationId().equals(organizationId))
-                .toList();
+        List<Employee> expectedEmployees = employeeRepository.findByOrganizationId(organizationId);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/organization/" + organizationId))
                 .andExpect(status().isOk())
