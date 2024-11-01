@@ -1,5 +1,6 @@
 package be.pxl.services.services;
 
+import be.pxl.services.client.EmployeeClient;
 import be.pxl.services.domain.Department;
 import be.pxl.services.domain.Employee;
 import be.pxl.services.domain.dto.DepartmentRequest;
@@ -16,6 +17,7 @@ import java.util.List;
 public class DepartmentService implements IDepartmentService {
 
     private final DepartmentRepository departmentRepository;
+    private final EmployeeClient employeeClient;
 
     @Override
     public void addDepartment(DepartmentRequest departmentRequest) {
@@ -45,21 +47,20 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public List<DepartmentResponse> getDepartmentsByOrganization(Long organizationId) {
-        return departmentRepository.findAll()
+        return departmentRepository.findByOrganizationId(organizationId)
                 .stream()
-                .filter(department -> department.getOrganizationId().equals(organizationId))
                 .map(this::mapToDepartmentResponse)
                 .toList();
     }
 
     @Override
     public List<DepartmentResponse> getDepartmentsByOrganizationWithEmployees(Long organizationId) {
-                return departmentRepository.findAll()
+                return departmentRepository.findByOrganizationId(organizationId)
                 .stream()
-                .filter(department -> department.getOrganizationId().equals(organizationId))
                 .map(department -> {
                     DepartmentResponse departmentResponse = mapToDepartmentResponse(department);
-                    departmentResponse.setEmployees(department.getEmployees().stream().map(this::mapToEmployeeResponse).toList());
+                    departmentResponse.setEmployees(employeeClient.findByDepartment(department.getId())
+                            .stream().map(this::mapToEmployeeResponse).toList());
                     return departmentResponse;
                 })
                 .toList();
@@ -78,6 +79,9 @@ public class DepartmentService implements IDepartmentService {
         return EmployeeResponse.builder()
                 .id(employee.getId())
                 .name(employee.getName())
+                .age(employee.getAge())
+                .position(employee.getPosition())
+                .departmentId(employee.getDepartmentId())
                 .build();
     }
 }
