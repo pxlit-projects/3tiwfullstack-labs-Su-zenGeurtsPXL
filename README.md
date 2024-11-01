@@ -5,7 +5,7 @@ All you need to know in my [wiki](https://github.com/pxlit-projects/3tiwfullstac
 - [x]  Chapter 1: Spring Cloud
 - [x]  Chapter 2: Unit testing
 - [x]  Chapter 3: Discovery Service
-- [ ]  Chapter 4: Open Feign
+- [x]  Chapter 4: Open Feign
 - [ ]  Chapter 5: Config Service
 - [ ]  Chapter 6: Gateway Service
 - [ ]  Chapter 7: Logging
