@@ -4,6 +4,8 @@ import be.pxl.services.domain.dto.EmployeeRequest;
 import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.services.IEmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class EmployeeController {
 
     private final IEmployeeService employeeService;
+    private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -31,6 +34,7 @@ public class EmployeeController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<EmployeeResponse> findAll() {
+        log.info("Getting all employees");
         return employeeService.getAllEmployees();
     }
 
