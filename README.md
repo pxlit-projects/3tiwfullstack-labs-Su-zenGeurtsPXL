@@ -7,7 +7,7 @@ All you need to know in my [wiki](https://github.com/pxlit-projects/3tiwfullstac
 - [x]  Chapter 3: Discovery Service
 - [x]  Chapter 4: Open Feign
 - [x]  Chapter 5: Config Service
-- [ ]  Chapter 6: Gateway Service
+- [x]  Chapter 6: Gateway Service
 - [ ]  Chapter 7: Logging
 - [ ]  Chapter 8: Messaging AMQP
 - [ ]  Chapter 9: Swagger API
