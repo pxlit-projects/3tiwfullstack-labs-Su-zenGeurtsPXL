@@ -37,7 +37,7 @@ export class CustomerService {
   }
 
 
-  private isCustomerMatchingFilter(customer: Customer, filter: Filter): boolean {
+  public isCustomerMatchingFilter(customer: Customer, filter: Filter): boolean {
     const matchesName = customer.name.toLowerCase().includes(filter.name.toLowerCase());
     const matchesCity = customer.city.toLowerCase().includes(filter.city.toLowerCase());
     const matchesVat = filter.vat ? customer.vat === filter.vat : true;
