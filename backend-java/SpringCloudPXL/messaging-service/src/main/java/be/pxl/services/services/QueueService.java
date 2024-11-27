@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class QueueService {
-    @RabbitListener(queues = "messagingQueue")
+    @RabbitListener(queues = "myQueue")
     public void listen(String in) {
-        System.out.println("Message read from messagingQueue : " + in);
+        System.out.println("Message read from myQueue : " + in);
     }
 }

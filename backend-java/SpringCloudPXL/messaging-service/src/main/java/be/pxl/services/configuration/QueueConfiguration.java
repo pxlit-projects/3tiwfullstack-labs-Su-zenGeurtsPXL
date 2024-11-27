@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class QueueConfiguration {
     @Bean
     public Queue myQueue() {
-        return new Queue("messagingQueue", false);
+        return new Queue("myQueue", false);
     }
 }
